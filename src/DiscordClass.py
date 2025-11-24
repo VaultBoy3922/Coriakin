@@ -46,8 +46,9 @@ class MyClient(discord.Client):
     #     else:
     #         return False
 
-    def __send_message_to_subscribers(self, message_content, group):
+    def __send_message_to_subscribers(self, message_content, group, url=None):
         self.message_content = message_content
+        self.attachment_url = url
         NocoClass.authorize()
         print(f"Message content: {self.message_content}")
         self.message_content = self.message_content.replace(f"<@&{self.bot_id}> ", "")
@@ -56,9 +57,16 @@ class MyClient(discord.Client):
         for i in NocoClass.subscriber_list:
             if group in i[f"{NocoClass.subscriber_type_column}"]:
                 print(f"Sending message to {i['PhoneNumber']}")
-                TwilioClass.send_message(
-                    body=self.message_content, to=f"+{i['PhoneNumber']}"
-                )
+                if self.attachment_url:
+                    TwilioClass.send_message(
+                        body=f"{self.message_content}",
+                        media_url=f"{self.attachment_url}",
+                        to=f"+{i['PhoneNumber']}",
+                    )
+                else:
+                    TwilioClass.send_message(
+                        body=self.message_content, to=f"+{i['PhoneNumber']}"
+                    )
             else:
                 print(f"Subscriber {i['PhoneNumber']} is not in group {group}")
             time.sleep(1)
@@ -90,9 +98,17 @@ class MyClient(discord.Client):
             print(f"Group data: {group_data}")
             if group_data.discord_channel_id == self.message.channel.id:
                 print(f"Message is in a update group channel")
-                self.__send_message_to_subscribers(
-                    self.message.content, group=group_data.nocodb_tag
-                )
+                if self.message.attachments:
+                    attachment_url = message.attachments[0].url
+                    self.__send_message_to_subscribers(
+                        self.message.content,
+                        group=group_data.nocodb_tag,
+                        url=attachment_url,
+                    )
+                else:
+                    self.__send_message_to_subscribers(
+                        self.message.content, group=group_data.nocodb_tag
+                    )
                 break
             else:
                 print("Message is not in a update group channel")
