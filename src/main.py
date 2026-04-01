@@ -1,15 +1,10 @@
 import os
 import subprocess
 import discord
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
 from dotenv import load_dotenv
-=======
 from discord.ext import commands
->>>>>>> Stashed changes
-=======
-from discord.ext import commands
->>>>>>> Stashed changes
+
 
 from rich import print
 from rich.traceback import install
