@@ -25,21 +25,6 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
         super().__init__(*args, **kwargs)
         self.noco_class = NocoClass.NocoClass()
         self.twilio_class = TwilioClass.TwilioClient()
-
-    # def __send_message_to_subscribers(self, subscriber_group, message_content):
-    #     NocoClass.authorize()
-    #     for i in NocoClass.subscriber_list:
-    #         if subscriber_group in i[f"{NocoClass.subscriber_type_column}"]:
-    #             TwilioClass.send_message(
-    #                 body=message_content, to=f"+{i['PhoneNumber']}"
-    #             )
-    #         time.sleep(1)
-    
-
-
-    
-    
-
     
     group_options=[]
     for group in update_groups.text_update_groups.keys():

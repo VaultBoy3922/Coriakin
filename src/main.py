@@ -39,16 +39,8 @@ coriakin = commands.Bot(command_prefix="!", intents=intents)
 
 def main():
     print("Running Discord bot...")
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    client.run(client.TOKEN)
-=======
-    coriakin.run(token=discord_bot_config.bot_token)
->>>>>>> Stashed changes
-=======
-    coriakin.run(token=discord_bot_config.bot_token)
->>>>>>> Stashed changes
 
+    coriakin.run(token=discord_bot_config.bot_token)
 
 @coriakin.event
 async def on_ready():
@@ -60,11 +52,6 @@ async def on_ready():
 
     except Exception as e:
         print(f"Failed to load cog {cog[:-3]}: {e}")
-    # try:
-    #     synced = await coriakin.tree.sync()
-    #     print(f"Synced {len(synced)} command(s)")
-    # except Exception as e:
-    #     print(f"Failed to sync commands: {e}")
 
 if __name__ == "__main__":
     main()
