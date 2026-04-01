@@ -3,7 +3,11 @@ import time
 
 import discord
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from dotenv import load_dotenv
+=======
+from discord.ext import commands
+>>>>>>> Stashed changes
 =======
 from discord.ext import commands
 >>>>>>> Stashed changes
@@ -21,6 +25,7 @@ NocoClass = NocoClass.NocoClass()
 
 # class Coriakin(commands.Bot):
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -191,6 +196,63 @@ class MyClient(discord.Client):
 #     #             print(f"Subscriber {i['PhoneNumber']} is not in group {group}")
 #     #         time.sleep(1)
 
+=======
+# class MyClient(commands.Bot):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         # self.envFile = None
+#         self.bot_token = config_data.bot_token
+#         self.guild = config_data.guild
+#         self.bot_id = config_data.bot_id
+
+#         # self.TOKEN = os.environ["DISCORD_TOKEN"]
+#         # self.GUILD = os.environ["DISCORD_GUILD"]
+#         # self.DISCORD_BOT_ID = os.environ["DISCORD_BOT_ID"]
+
+#     def __check_if_mentioned(self, message):
+#         self.discord_message = message
+#         print(f"Discord message: {self.discord_message}")
+
+#         self.id_to_check = f"<@&{self.bot_id}>"
+#         if self.id_to_check in self.discord_message:
+#             return True
+#         else:
+#             return False
+
+#     # def __check_channel_id(self, message_channel: int, channel_id: int):
+#     #     print(f"Message channel: {message_channel}")
+#     #     print(f"Channel id: {channel_id}")
+#     #     if str(message_channel) == str(channel_id):
+#     #         return True
+#     #     else:
+#     #         return False
+
+#     # def __send_message_to_subscribers(self, message_content, group, url=None):
+#     #     self.message_content = message_content
+#     #     self.attachment_url = url
+#     #     NocoClass.authorize()
+#     #     print(f"Message content: {self.message_content}")
+#     #     self.message_content = self.message_content.replace(f"<@&{self.bot_id}> ", "")
+#     #     print(f"Message content: {self.message_content}")
+
+#     #     for i in NocoClass.subscriber_list:
+#     #         if group in i[f"{NocoClass.subscriber_type_column}"]:
+#     #             print(f"Sending message to {i['PhoneNumber']}")
+#     #             if self.attachment_url:
+#     #                 TwilioClass.send_message(
+#     #                     body=f"{self.message_content}",
+#     #                     media_url=f"{self.attachment_url}",
+#     #                     to=f"+{i['PhoneNumber']}",
+#     #                 )
+#     #             else:
+#     #                 TwilioClass.send_message(
+#     #                     body=self.message_content, to=f"+{i['PhoneNumber']}"
+#     #                 )
+#     #         else:
+#     #             print(f"Subscriber {i['PhoneNumber']} is not in group {group}")
+#     #         time.sleep(1)
+
+>>>>>>> Stashed changes
 #     async def on_ready(self):
 #         guild = discord.utils.get(self.guilds, name=self.guild)
 #         print(
@@ -232,4 +294,7 @@ class MyClient(discord.Client):
 #     #             break
 #     #         else:
 #     #             print("Message is not in a update group channel")
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

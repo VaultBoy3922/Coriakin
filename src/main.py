@@ -2,7 +2,11 @@ import os
 import subprocess
 import discord
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from dotenv import load_dotenv
+=======
+from discord.ext import commands
+>>>>>>> Stashed changes
 =======
 from discord.ext import commands
 >>>>>>> Stashed changes
@@ -36,7 +40,11 @@ coriakin = commands.Bot(command_prefix="!", intents=intents)
 def main():
     print("Running Discord bot...")
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     client.run(client.TOKEN)
+=======
+    coriakin.run(token=discord_bot_config.bot_token)
+>>>>>>> Stashed changes
 =======
     coriakin.run(token=discord_bot_config.bot_token)
 >>>>>>> Stashed changes
