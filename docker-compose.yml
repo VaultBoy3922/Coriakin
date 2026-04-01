@@ -1,5 +1,6 @@
 services:
     # uwsgiBotApp:
+<<<<<<< Updated upstream
     #     image: vaultboy3922/webapp:latest
     #     ports:
     #         - "80:80"
@@ -10,3 +11,15 @@ services:
     discordBot:
         image: vaultboy3922/bot:latest
         env_file: "./.env"
+=======
+    #     image: vaultboy3922/webapp:0.3b1
+    #     ports:
+    #         - "80:80"
+    #     volumes:
+    #         - ./config.yml:./config.yml
+
+    discordBot:
+        image: vaultboy3922/bot:0.3a1
+        volumes:
+            - ./config.yml:/config.yml
+>>>>>>> Stashed changes

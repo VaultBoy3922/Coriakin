@@ -1,0 +1,108 @@
+import time
+
+import discord
+from discord import ui
+from discord import app_commands
+from discord.ext import commands
+from typing import List
+
+from rich import print
+from rich.traceback import install
+
+import TwilioClass
+import NocoClass
+from config import load_discord_bot_config, load_text_update_groups
+
+
+install(show_locals=True)
+# NocoClass = NocoClass.NocoClass()
+config_data = load_discord_bot_config()
+update_groups = load_text_update_groups()
+
+
+class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.noco_class = NocoClass.NocoClass()
+        self.twilio_class = TwilioClass.TwilioClient()
+
+    # def __send_message_to_subscribers(self, subscriber_group, message_content):
+    #     NocoClass.authorize()
+    #     for i in NocoClass.subscriber_list:
+    #         if subscriber_group in i[f"{NocoClass.subscriber_type_column}"]:
+    #             TwilioClass.send_message(
+    #                 body=message_content, to=f"+{i['PhoneNumber']}"
+    #             )
+    #         time.sleep(1)
+    
+
+
+    
+    
+
+    
+    group_options=[]
+    for group in update_groups.text_update_groups.keys():
+        group_options += [
+            discord.SelectOption(
+                label=f"{group}", description=f"Send message to {group} subscribers"
+            )
+        ]
+
+    groupName = ui.Label(
+        text="Group Selection",
+        description="Please Select the Notification Group",
+        component=ui.Select(placeholder="Choose group...", options=group_options),
+    )
+    message = ui.TextInput(
+        label="Text Notification Message",
+        style=discord.TextStyle.paragraph,
+        placeholder="Enter the message to send to subscribers",
+        required=True,
+        max_length=1500,
+    )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        self.noco_class.authorize()
+        for i in self.noco_class.subscriber_list:
+            if self.groupName.component.values[0] in i[f"{self.noco_class.subscriber_type_column}"].lower():
+                print(f"Sending message to {i['PhoneNumber']}")
+                self.twilio_class.send_message(
+                    body=self.message.value, to=f"+{i['PhoneNumber']}"
+                )
+            else:
+                print(f"Not sending message to {i['PhoneNumber']}")
+            # time.sleep(1)
+
+        await interaction.response.send_message(
+            f"Sending message to {self.groupName.component.values[0]} subscribers: {self.message.value}",
+            ephemeral=True,
+        )
+
+
+    async def on_error(self, interaction: discord.Interaction, error: Exception):
+        await interaction.response.send_message(
+            f"An error occurred while processing your request: {str(error)}",
+            ephemeral=True,
+        )
+
+
+class TextsCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    # TODO: add error handling, rewite to be more efficient with new command structure, report success/failure, have message from bot only sender can see to walk through process, send webhook message in correct announcmenet channel from sender
+    @app_commands.command(
+        name="send_text", description="Send a text message to subscribers."
+    )
+    # TODO: make the role configurable in the config file instead of hardcoding it here
+    # TODO: make error handling for if user does not have the role
+    # TODO: hide command from users who do not have the role
+    @app_commands.checks.has_role("text-updates")
+    async def send_text(self, interaction: discord.Interaction):
+        await interaction.response.send_modal(TextMessageUI())
+
+
+
+async def setup(bot):
+    await bot.add_cog(TextsCog(bot))

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 FROM python:3.13
 
 ADD src/DiscordClass.py .
@@ -7,6 +8,18 @@ ADD src/NocoClass.py .
 ADD src/TwilioClass.py .
 ADD src/wsgi.py .
 RUN pip install flask twilio dotenv rich requests discord uwsgi
+=======
+FROM python:3.14.3-alpine3.23
+
+ADD src/DiscordClass.py .
+ADD src/textsCogs.py .
+ADD src/ownerCogs.py .
+ADD src/main.py .
+ADD src/NocoClass.py .
+ADD src/TwilioClass.py .
+ADD src/config.py .
+RUN pip install twilio rich requests discord.py pyyaml typing pydantic
+>>>>>>> Stashed changes
 
 CMD ["python", "main.py"]
 # CMD ["python", "uwsgi --socket 0.0.0.0:80 --protocol=http -w wsgi:app  "]
