@@ -60,7 +60,9 @@ def load_twilio_config():
 
 
 def load_nocodb_data():
-    config_data = read_config() #try to print thisn because I forgot what it looks like
+    config_data = (
+        read_config()
+    )  # try to print thisn because I forgot what it looks like
     return NocoDBConfig(**config_data["nocodb_config"])
 
 

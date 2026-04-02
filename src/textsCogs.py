@@ -25,8 +25,9 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
         super().__init__(*args, **kwargs)
         self.noco_class = NocoClass.NocoClass()
         self.twilio_class = TwilioClass.TwilioClient()
-    
-    group_options=[]
+
+    group_options = []
+
     for group in update_groups.text_update_groups.keys():
         group_options += [
             discord.SelectOption(
@@ -39,6 +40,7 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
         description="Please Select the Notification Group",
         component=ui.Select(placeholder="Choose group...", options=group_options),
     )
+
     message = ui.TextInput(
         label="Text Notification Message",
         style=discord.TextStyle.paragraph,
@@ -47,10 +49,15 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
         max_length=1500,
     )
 
+    fileUpload = ui.FileUpload(required=False)
+
     async def on_submit(self, interaction: discord.Interaction):
         self.noco_class.authorize()
         for i in self.noco_class.subscriber_list:
-            if self.groupName.component.values[0] in i[f"{self.noco_class.subscriber_type_column}"].lower():
+            if (
+                self.groupName.component.values[0]
+                in i[f"{self.noco_class.subscriber_type_column}"].lower()
+            ):
                 print(f"Sending message to {i['PhoneNumber']}")
                 self.twilio_class.send_message(
                     body=self.message.value, to=f"+{i['PhoneNumber']}"
@@ -63,7 +70,6 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
             f"Sending message to {self.groupName.component.values[0]} subscribers: {self.message.value}",
             ephemeral=True,
         )
-
 
     async def on_error(self, interaction: discord.Interaction, error: Exception):
         await interaction.response.send_message(
@@ -86,7 +92,6 @@ class TextsCog(commands.Cog):
     @app_commands.checks.has_role("text-updates")
     async def send_text(self, interaction: discord.Interaction):
         await interaction.response.send_modal(TextMessageUI())
-
 
 
 async def setup(bot):

@@ -1,10 +1,7 @@
 import os
 import subprocess
 import discord
-
-from dotenv import load_dotenv
 from discord.ext import commands
-
 
 from rich import print
 from rich.traceback import install
@@ -34,8 +31,8 @@ coriakin = commands.Bot(command_prefix="!", intents=intents)
 
 def main():
     print("Running Discord bot...")
-
     coriakin.run(token=discord_bot_config.bot_token)
+
 
 @coriakin.event
 async def on_ready():
@@ -47,6 +44,7 @@ async def on_ready():
 
     except Exception as e:
         print(f"Failed to load cog {cog[:-3]}: {e}")
+
 
 if __name__ == "__main__":
     main()

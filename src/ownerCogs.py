@@ -23,7 +23,7 @@ class Owner(commands.Cog, name="Owner"):
 
     async def process_message(self, message):
         synced = await self.bot.tree.sync(guild=message.guild)
-        synced = await self.bot.tree.sync()
+        # synced = await self.bot.tree.sync()
         await message.channel.send(f"Successfully synced {len(synced)} command(s).")
 
 
