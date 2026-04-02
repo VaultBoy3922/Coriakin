@@ -50,7 +50,7 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
         required=True,
         max_length=1500,
     )
-
+    # TODO: make message check if texts properly sent, and if not report error like a file size limit exceeded for Twilio MMS or character limit for SMS
     fileUpload = ui.Label(
         text="File Upload (Optional. 5MB limit for file or Text will not send)",
         description="Upload a file to send with the message",
