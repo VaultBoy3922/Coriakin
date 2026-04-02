@@ -49,8 +49,14 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
         max_length=1500,
     )
 
-    fileUpload = ui.FileUpload(required=False)
+    fileUpload = ui.Label(
+        text="File Upload (Optional)",
+        description="Upload a file to send with the message",
+        component=ui.FileUpload(required=False),
+    )
 
+    # TODO: add file upload functionality, add error handling for file upload, add check for if file is too large for twilio, add check for if file type is supported by twilio, add functionality to send file with message in twilio, add functionality to send file with message in discord webhook, add functionality to send message in correct announcement channel in discord based on group selection
+    # TODO: add logging instead of print statements, make sure Sending Message message sends only if twilio sucessfully send message and add error message in discord to show why it failed
     async def on_submit(self, interaction: discord.Interaction):
         self.noco_class.authorize()
         for i in self.noco_class.subscriber_list:
@@ -58,16 +64,31 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
                 self.groupName.component.values[0]
                 in i[f"{self.noco_class.subscriber_type_column}"].lower()
             ):
-                print(f"Sending message to {i['PhoneNumber']}")
-                self.twilio_class.send_message(
-                    body=self.message.value, to=f"+{i['PhoneNumber']}"
+                print(
+                    f"{i['PhoneNumber']} is subscribed to {self.groupName.component.values[0]} updates"
                 )
+                if self.fileUpload.component.values:
+                    print(
+                        f"File uploaded: {self.fileUpload.component.values[0].url}, sending with message"
+                    )
+                    self.twilio_class.send_message(
+                        body=self.message.value,
+                        to=f"+{i['PhoneNumber']}",
+                        media_url=self.fileUpload.component.values[0].url,
+                    )
+                else:
+                    print("No file uploaded")
+                    self.twilio_class.send_message(
+                        body=self.message.value, to=f"+{i['PhoneNumber']}"
+                    )
             else:
-                print(f"Not sending message to {i['PhoneNumber']}")
+                print(
+                    f"{i['PhoneNumber']} not subscribed to {self.groupName.component.values[0]} updates"
+                )
             # time.sleep(1)
 
         await interaction.response.send_message(
-            f"Sending message to {self.groupName.component.values[0]} subscribers: {self.message.value}",
+            f"Sending message to: {self.groupName.component.values[0]}, subscribers: {self.message.value}, with file: {self.fileUpload.component.values[0].url if self.fileUpload.component.values else 'No file uploaded'}",
             ephemeral=True,
         )
 

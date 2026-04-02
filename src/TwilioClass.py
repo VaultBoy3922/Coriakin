@@ -26,13 +26,18 @@ class TwilioClient:
         return self.client
 
     #  TODO: add check for if the phone number is blocked on twilio side, typically because their opt-out message was missed by this app. Remove that user from my nocodb list
-    def send_message(self, body, to):
+    def send_message(self, body, to, media_url=None):
         self.body = str(body)
         self.to = f"+{to}"
         self.message = self.client.messages.create(
-            body=self.body, from_=f"{self.twilio_phone_number}", to=f"{self.to}"
+            body=self.body,
+            from_=f"{self.twilio_phone_number}",
+            to=f"{self.to}",
+            media_url=[f"{media_url}"] if media_url else None,
         )
-        print(self.message)
+        print(
+            f"Message sent: {self.message}, SID: {self.message.sid}, Status: {self.message.status}, "
+        )
 
 
 # if __name__ == "__main__":
