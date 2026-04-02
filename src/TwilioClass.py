@@ -25,6 +25,7 @@ class TwilioClient:
         self.client = Client(self.twilio_account_sid, self.twilio_auth_token)
         return self.client
 
+    # TODO: add error reporting and handling when twilio can't send message
     #  TODO: add check for if the phone number is blocked on twilio side, typically because their opt-out message was missed by this app. Remove that user from my nocodb list
     def send_message(self, body, to, media_url=None):
         self.body = str(body)

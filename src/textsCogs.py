@@ -52,7 +52,7 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
     )
 
     fileUpload = ui.Label(
-        text="File Upload (Optional)",
+        text="File Upload (Optional. 5MB limit for file or Text will not send)",
         description="Upload a file to send with the message",
         component=ui.FileUpload(required=False),
     )

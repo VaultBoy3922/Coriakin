@@ -29,6 +29,8 @@ intents.message_content = True
 coriakin = commands.Bot(command_prefix="!", intents=intents)
 
 
+# TODO: figure out how to make the bot something anyone can add without needing to setup and host like I do now, if possible, kinda like Craig or Carl-Bot.
+# TODO: make sure if someone adds the bot, they don't access our config and can use their own config (potentially with DM but open to options)
 def main():
     print("Running Discord bot...")
     coriakin.run(token=discord_bot_config.bot_token)
