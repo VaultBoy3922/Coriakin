@@ -19,6 +19,8 @@ install(show_locals=True)
 config_data = load_discord_bot_config()
 update_groups = load_text_update_groups()
 
+# TODO: organize and make readable
+
 
 class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
     def __init__(self, *args, **kwargs):

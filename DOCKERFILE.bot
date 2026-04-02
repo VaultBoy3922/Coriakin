@@ -1,7 +1,5 @@
 FROM python:3.14.3-alpine3.23
 
-ADD src/DiscordClass.py .
-
 ADD src/textsCogs.py .
 ADD src/ownerCogs.py .
 ADD src/main.py .
