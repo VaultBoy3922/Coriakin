@@ -88,7 +88,7 @@ class TextMessageUI(ui.Modal, title="Send Text Message Notification"):
             # time.sleep(1)
 
         await interaction.response.send_message(
-            f"Sending message to: {self.groupName.component.values[0]}, subscribers: {self.message.value}, with file: {self.fileUpload.component.values[0].url if self.fileUpload.component.values else 'No file uploaded'}",
+            f"Sending message to {self.groupName.component.values[0]} subscribers: {self.message.value}, with file: {self.fileUpload.component.values[0].url if self.fileUpload.component.values else 'No file uploaded'}",
             ephemeral=True,
         )
 
